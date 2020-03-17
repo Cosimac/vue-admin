@@ -1,22 +1,9 @@
 <template>
   <div>
     <el-scrollbar wrap-class="scrollbar-wrapper">
-      <el-menu
-        :default-active="activeMenu"
-        :collapse="isCollapse"
-        :background-color="variables.menuBg"
-        :text-color="variables.menuText"
-        :unique-opened="false"
-        :active-text-color="variables.menuActiveText"
-        :collapse-transition="false"
-        mode="vertical"
-      >
-        <!-- <sidebar-item
-          v-for="route in routes"
-          :key="route.path"
-          :item="route"
-          :base-path="route.path"
-        /> -->
+      <el-menu :default-active="activeMenu" :collapse="isCollapse" :background-color="variables.menuBg" :text-color="variables.menuText" :unique-opened="false"
+        :active-text-color="variables.menuActiveText" :collapse-transition="false" mode="vertical">
+        <sidebar-item v-for="route in routes" :key="route.path" :item="route" :base-path="route.path" />
       </el-menu>
     </el-scrollbar>
   </div>
@@ -24,10 +11,14 @@
 
 <script>
 import variables from "@/styles/variables.scss";
+import SidebarItem from "./SidebarItem";
 // import { mapState } from "vuex";
 
 export default {
   name: "Sidebar",
+  components: {
+    SidebarItem
+  },
   computed: {
     // ...mapState([
     //   'sidebar'
@@ -41,10 +32,13 @@ export default {
       return path;
     },
     isCollapse() {
-      return true;
+      return false;
     },
     variables() {
       return variables;
+    },
+    routes() {
+      return this.$router.options.routes;
     }
   }
 };
