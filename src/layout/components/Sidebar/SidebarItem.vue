@@ -1,18 +1,23 @@
 <template>
   <div v-if="!item.hidden">
     <template v-if="hasOneShowingChild(item.children, item)">
-      <el-menu-item :index="onlyOneChild.path">
-        <!-- <item :icon="onlyOneChild.meta.icon || (item.meta&&item.meta.icon)" :title="onlyOneChild.meta.title" /> -->
-        <span slot="title">{{onlyOneChild.meta.title}}</span>
-      </el-menu-item>
+      <app-link :to="resolvePath(onlyOneChild.path)">
+        <el-menu-item :index="onlyOneChild.path">
+          <!-- <item :icon="onlyOneChild.meta.icon || (item.meta&&item.meta.icon)" :title="onlyOneChild.meta.title" /> -->
+          <span slot="title">{{onlyOneChild.meta.title}}</span>
+        </el-menu-item>
+      </app-link>
     </template>
     <el-submenu v-else :index="item.path">
       <template slot="title">
-        <span v-if="item.meta">
-          {{item.meta.title}}
-        </span>
+        <span v-if="item.meta">{{item.meta.title}}</span>
       </template>
-      <sidebar-item v-for="child in item.children" :key="child.path" :item="child" :base-path="child.path" />
+      <sidebar-item
+        v-for="child in item.children"
+        :key="child.path"
+        :item="child"
+        :base-path="child.path"
+      />
     </el-submenu>
   </div>
 </template>
@@ -20,9 +25,13 @@
 <script>
 import path from "path";
 import { isExternal } from "@/utils/validate";
+import AppLink from "./AppLink";
 
 export default {
   name: "SidebarItem",
+  components: {
+    AppLink
+  },
   props: {
     item: {
       type: Object,
