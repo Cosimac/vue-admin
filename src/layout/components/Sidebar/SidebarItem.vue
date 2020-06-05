@@ -3,7 +3,8 @@
     <template v-if="hasOneShowingChild(item.children, item)">
       <app-link :to="resolvePath(onlyOneChild.path)">
         <el-menu-item :index="onlyOneChild.path">
-          <item :icon="onlyOneChild.meta.icon || (item.meta&&item.meta.icon)" :title="onlyOneChild.meta.title" />
+          <span>{{onlyOneChild.meta.title}}</span>
+          <!-- <item :icon="onlyOneChild.meta.icon || (item.meta&&item.meta.icon)" :title="onlyOneChild.meta.title" /> -->
         </el-menu-item>
       </app-link>
     </template>
@@ -20,13 +21,13 @@
 import path from "path";
 import { isExternal } from "@/utils/validate";
 import AppLink from "./AppLink";
-import Item from "./Item";
+// import Item from "./Item";
 
 export default {
   name: "SidebarItem",
   components: {
     AppLink,
-    Item
+    // Item
   },
   props: {
     item: {
