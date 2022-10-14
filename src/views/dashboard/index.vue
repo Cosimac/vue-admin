@@ -1,7 +1,7 @@
 <!--
  * @Date: 2022-10-14 10:38:47
  * @LastEditors: Cosima
- * @LastEditTime: 2022-10-14 15:28:13
+ * @LastEditTime: 2022-10-14 18:48:42
  * @FilePath: \vue-admin\src\views\dashboard\index.vue
 -->
 <template>
@@ -11,15 +11,20 @@
 </template>
 
 <script>
+// import { textThis } from '@/utils/common'
 export default {
+  name: 'dashboard',
   data () {
-    return {}
+    return {
+      value: 123
+    }
   },
   created () {
     // this.asyncAwait()
     // this.initPromise()
     // this.initGenerator()
-    this.initIterator()
+    // this.initIterator()
+    this.initCall()
   },
   methods: {
     async asyncAwait () {
@@ -108,6 +113,20 @@ export default {
       console.log(iterator, 'iterator---init');
       console.dir(iterator, 'iterator---init');
       iterator.next()
+    },
+    initCall () {
+      // textThis.call(this)
+      var foo = {
+        count: 1
+      };
+      function bar () {
+        console.log(this.count);
+      }
+      // 实现call函数
+      Function.prototype.myCall = function (content) {
+        console.log(content, 'content---');
+      }
+      bar.myCall(foo); // 1
     }
   }
 }
