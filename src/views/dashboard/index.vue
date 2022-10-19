@@ -1,7 +1,8 @@
 <!--
+import { log } from 'util';
  * @Date: 2022-10-14 10:38:47
  * @LastEditors: Cosima
- * @LastEditTime: 2022-10-14 18:48:42
+ * @LastEditTime: 2022-10-19 16:47:52
  * @FilePath: \vue-admin\src\views\dashboard\index.vue
 -->
 <template>
@@ -119,14 +120,29 @@ export default {
       var foo = {
         count: 1
       };
-      function bar () {
-        console.log(this.count);
+      function bar (value) {
+        // obj.count
+        console.log(value, 'value---1');
+        console.log(this.count, 'this.count');
       }
       // 实现call函数
-      Function.prototype.myCall = function (content) {
-        console.log(content, 'content---');
+      Function.prototype.myCall = function (context) {
+        // 相当于给传入的上下文context 赋值了一个新的函数并执行
+        // 1. 赋值this指向
+        // 2. 触发函数
+        // 不传第一个参数，默认是window,
+        var content = context || window;
+        // 给context添加一个属性，这时的this指向调用myCall的函数，比如上文的bar函数
+        content.fn = this;
+        // 通过展开运算符和解构赋值取出context后面的参数，上文的例子没有传入参数列表
+        var args = [...arguments].slice(1);
+        // 执行函数（相当于上文的bar(...args)）
+        var result = context.fn(...args);
+        // 删除函数
+        delete context.fn;
+        return result;
       }
-      bar.myCall(foo); // 1
+      bar.myCall(foo, 1, 2); // 1
     }
   }
 }
