@@ -1,13 +1,19 @@
 <!--
 import { log } from 'util';
  * @Date: 2022-10-14 10:38:47
- * @LastEditors: Cosima
- * @LastEditTime: 2022-10-19 16:47:52
+ * @LastEditors: baiyi yi.bai@nascent.cn
+ * @LastEditTime: 2022-11-04 17:13:00
  * @FilePath: \vue-admin\src\views\dashboard\index.vue
 -->
 <template>
   <div class="app-container">
     <span>dashboard</span>
+    <canvas
+      id="c"
+      width="300"
+      height="300"
+      style="border: 1px solid #ccc"
+    ></canvas>
   </div>
 </template>
 
@@ -25,7 +31,10 @@ export default {
     // this.initPromise()
     // this.initGenerator()
     // this.initIterator()
-    this.initCall()
+    // this.initCall()
+  },
+  mounted () {
+    this.initCanvas()
   },
   methods: {
     async asyncAwait () {
@@ -143,6 +152,34 @@ export default {
         return result;
       }
       bar.myCall(foo, 1, 2); // 1
+    },
+    // 绘制Canvas
+    initCanvas () {
+      const cnv = document.getElementById('c')
+      const cxt = cnv.getContext('2d')
+
+      // 绘制矩形
+      // cxt.moveTo(50, 50)
+      // cxt.lineTo(200, 50)
+      // cxt.lineTo(200, 120)
+      // cxt.lineTo(50, 120)
+      // cxt.lineTo(50, 50) // 需要闭合，又或者使用 closePath() 方法进行闭合，推荐使用 closePath()
+
+      // cxt.strokeStyle = 'pink'
+      // cxt.strokeRect(50, 50, 150, 70)
+      // cxt.stroke()
+
+      // cxt.fillStyle = 'pink'
+      // cxt.fillRect(50, 50, 200, 100)
+
+      // 画圆
+      cxt.beginPath()
+      cxt.arc(150, 150, 100, 0, 180 * Math.PI / 180)
+      cxt.closePath()
+      cxt.stroke()
+
+      // 画线
+
     }
   }
 }
